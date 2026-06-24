@@ -2,78 +2,58 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard ChatFriends</title>
+    <title>ChatFriends Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Estilos básicos para que los paneles funcionen */
-        .chats-panel, .grupos-panel {
-            display: none;
-            padding: 20px;
-            color: white;
-        }
-        /* Mostrar el de chats por defecto */
-        #chats-panel { display: block; }
-        
-        .sidebar-menu { width: 60px; background: #1a222c; height: 100vh; position: fixed; }
-        .menu-options { margin-top: 20px; text-align: center; }
-        .menu-options div { margin-bottom: 20px; cursor: pointer; color: white; font-size: 20px; }
-        .logout-btn { position: absolute; bottom: 20px; left: 20px; cursor: pointer; color: white; }
+        body { margin: 0; display: flex; background-color: #0d1117; font-family: sans-serif; }
+        .sidebar-menu { width: 70px; background: #161b22; height: 100vh; display: flex; flex-direction: column; align-items: center; padding-top: 20px; }
+        .menu-options div { color: #8b949e; cursor: pointer; font-size: 24px; margin-bottom: 30px; transition: 0.3s; }
+        .menu-options div:hover { color: #ffffff; }
+        .panel { display: none; width: 100%; padding: 40px; color: white; }
+        .mensaje-vacio { color: #484f58; text-align: center; margin-top: 50px; font-style: italic; }
+        .logout-btn { margin-top: auto; margin-bottom: 20px; cursor: pointer; color: #f85149; }
     </style>
 </head>
 <body>
 
-    <div class="sidebar-menu">
-        <div class="avatar-container" onclick="openModal('profileModal')">
-            <img src="https://via.placeholder.com/50" alt="Mi Perfil">
-        </div>
-        
+    <nav class="sidebar-menu">
         <div class="menu-options">
-            <div onclick="mostrarPanel('chats-panel')">
-                <i class="fa-solid fa-message" title="Chats"></i>
-            </div>
-            <div onclick="mostrarPanel('grupos-panel')">
-                <i class="fa-solid fa-users" title="Grupos"></i>
-            </div>
+            <div onclick="mostrarPanel('chats-panel')"><i class="fa-solid fa-message" title="Chats"></i></div>
+            <div onclick="mostrarPanel('grupos-panel')"><i class="fa-solid fa-users" title="Grupos"></i></div>
+        </div>
+        <div class="logout-btn" onclick="window.location.href='/'"><i class="fa-solid fa-right-from-bracket"></i></div>
+    </nav>
+
+    <main style="flex: 1;">
+        <div id="chats-panel" class="panel" style="display: block;">
+            <h1>Chats</h1>
+            <div class="contenido-lista"></div>
         </div>
 
-        <div class="logout-btn" onclick="window.location.href='/'" title="Cerrar Sesión">
-            <i class="fa-solid fa-right-from-bracket"></i>
+        <div id="grupos-panel" class="panel">
+            <h1>Grupos</h1>
+            <div class="contenido-lista"></div>
         </div>
-    </div>
-
-    <div style="margin-left: 60px;">
-        <div id="chats-panel" class="chats-panel">
-            <h1>Panel de Chats</h1>
-            <p>Aquí verás tus conversaciones.</p>
-        </div>
-
-        <div id="grupos-panel" class="grupos-panel">
-            <h1>Panel de Grupos</h1>
-            <p>Aquí verás tus grupos y amigos.</p>
-        </div>
-    </div>
-
-    <div class="modal" id="profileModal" style="display:none;">
-        <div class="modal-content">
-            <h3>Mi Perfil de Usuario</h3>
-            <button onclick="closeModal('profileModal')">Cerrar</button>
-        </div>
-    </div>
+    </main>
 
     <script>
         function mostrarPanel(idPanel) {
-            // Ocultar todos los paneles
-            document.getElementById('chats-panel').style.display = 'none';
-            document.getElementById('grupos-panel').style.display = 'none';
+            // Ocultar todos
+            document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
             
-            // Mostrar el seleccionado
-            const seleccionado = document.getElementById(idPanel);
-            if(seleccionado) {
-                seleccionado.style.display = 'block';
+            // Mostrar seleccionado
+            const panel = document.getElementById(idPanel);
+            panel.style.display = 'block';
+
+            // Lógica de estado vacío
+            const lista = panel.querySelector('.contenido-lista');
+            if (lista.children.length === 0 && !panel.querySelector('.mensaje-vacio')) {
+                const msg = document.createElement('p');
+                msg.className = 'mensaje-vacio';
+                msg.innerText = (idPanel === 'chats-panel') ? "Sin chats recientes" : "Sin grupos recientes";
+                panel.appendChild(msg);
             }
         }
-
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
 </body>
 </html>
