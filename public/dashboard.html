@@ -60,8 +60,35 @@
             <img src="https://via.placeholder.com/150" alt="Mi Perfil">
         </div>
         <div class="menu-options">
-            <i class="fa-solid fa-message" title="Chats"></i>
-            <i class="fa-solid fa-users" title="Grupos"></i>
+           <div onclick="mostrarPanel('chats-panel')" style="cursor:pointer; margin-bottom: 20px; color: white;">
+    <i class="fa-solid fa-message" title="Chats"></i>
+</div>
+<div onclick="mostrarPanel('grupos-panel')" style="cursor:pointer; color: white;">
+    <i class="fa-solid fa-users" title="Grupos"></i>
+</div>
+          </div> 
+
+    <script>
+        function mostrarPanel(idPanel) {
+            // Ocultar todos los paneles
+            document.querySelectorAll('.chats-panel, .grupos-panel').forEach(p => {
+                p.style.display = 'none';
+            });
+
+            // Mostrar el seleccionado
+            const panel = document.getElementById(idPanel);
+            if (panel) {
+                panel.style.display = 'block';
+            }
+        }
+    </script>
+
+    <div class="logout-btn" onclick="window.location.href='/'" title="Cerrar Sesión">
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </div>
+
+</body>
+</html>
         </div>
         <div class="logout-btn" onclick="window.location.href='/'" title="Cerrar Sesión">
             <i class="fa-solid fa-right-from-bracket"></i>
