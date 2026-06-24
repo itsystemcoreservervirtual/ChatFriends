@@ -103,5 +103,26 @@
             if (savedPhoto) document.getElementById('avatarPrincipal').src = savedPhoto;
         }
     </script>
+    <script>
+    async function cargarChats() {
+        try {
+            const respuesta = await fetch('/api/chats');
+            const chats = await respuesta.json();
+            
+            const contenedor = document.getElementById('lista-chats');
+            if (chats && chats.length > 0) {
+                contenedor.innerHTML = ''; // Limpia el mensaje "Sin chats"
+                chats.forEach(chat => {
+                    contenedor.innerHTML += `<div class="item-list">${chat.nombre}</div>`;
+                });
+            }
+        } catch (e) {
+            console.error("Error conectando con el servidor:", e);
+        }
+    }
+    
+    // Ejecutar al cargar la página
+    window.onload = cargarChats;
+</script>
 </body>
 </html>
