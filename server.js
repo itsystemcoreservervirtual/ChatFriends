@@ -81,10 +81,12 @@ io.on('connection', (socket) => {
 });
 
 // Cambiar por tu URI de MongoDB Atlas cuando la crees
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/chat_profesional";
+// CONEXIÓN A LA NUBE (PERSISTENTE)
+const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://TU_USUARIO:TU_CONTRASEÑA@cluster0.xxxxx.mongodb.net/nombre_de_tu_bd";
+
 mongoose.connect(MONGO_URI)
-    .then(() => console.log('Base de Datos MongoDB Conectada exitosamente.'))
-    .catch(err => console.error('Error de conexión a DB:', err));
+  .then(() => console.log('✅ Conectado a MongoDB Atlas en la nube'))
+  .catch(err => console.error('❌ Error de conexión a la base de datos:', err));
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Servidor Profesional corriendo en el puerto ${PORT}`));
