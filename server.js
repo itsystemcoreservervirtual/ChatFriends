@@ -13,6 +13,17 @@ const io = new Server(server, {
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Agrega esto en server.js
+app.get('/api/chats', async (req, res) => {
+    try {
+        const Chat = require('./models/Chat'); // Asegúrate que el modelo exista
+        const chats = await Chat.find();      // Busca en tu BD de MongoDB
+        res.json(chats);
+    } catch (err) {
+        res.status(500).json({ error: "Error al cargar" });
+    }
+});
+
 // MÓDULO DE WEBSOCKETS (Lógica en tiempo real)
 io.on('connection', (socket) => {
     console.log('Usuario conectado al ecosistema de chat');
