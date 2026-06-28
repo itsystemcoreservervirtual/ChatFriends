@@ -1,128 +1,35 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Ecosistema de Chat Profesional</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root { --bg-color: #000020; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; color: white; }
-        body { background: var(--bg-color); display: flex; height: 100vh; overflow: hidden; }
-        
-        /* Sidebar */
-        .sidebar-menu { width: 80px; background: #000020; border-right: 1px solid #334155; display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
-        .avatar-box { width: 50px; height: 50px; border-radius: 50%; cursor: pointer; border: 2px solid white; overflow: hidden; }
-        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-        .menu-options { display: flex; flex-direction: column; gap: 40px; flex-grow: 1; justify-content: center; font-size: 24px; cursor: pointer; }
-        
-        /* Paneles */
-        .panel { display: none; width: 300px; background: #000020; border-right: 1px solid #334155; padding: 20px; }
-        .panel.active { display: block; }
-        .empty-msg { text-align: center; margin-top: 50px; color: #94a3b8; font-style: italic; }
-        
-        /* Modales */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 10; }
-        .modal-content { background: #000020; padding: 20px; border-radius: 12px; width: 320px; text-align: center; border: 1px solid white; }
-        .btn { padding: 10px; width: 100%; border: 1px solid white; border-radius: 6px; cursor: pointer; margin-top: 8px; color: white; background: #000020; }
-        .custom-file-upload { display: inline-block; padding: 10px; background: #000020; border: 1px solid white; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 10px; }
-    </style>
-</head>
-<body>
-
-    <nav class="sidebar-menu">
-        <div class="avatar-box" onclick="document.getElementById('perfilModal').style.display='flex'">
-            <img id="avatarPrincipal" src="https://via.placeholder.com/150" alt="Perfil">
-        </div>
-        <div class="menu-options">
-            <i class="fa-solid fa-message" onclick="mostrarPanel('chats-panel')"></i>
-            <i class="fa-solid fa-users" onclick="mostrarPanel('grupos-panel')"></i>
-        </div>
-        <div onclick="window.location.href='/'" style="color:white; cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i></div>
-    </nav>
-
-    <div id="chats-panel" class="panel active">
-        <h3>Mensajería</h3>
-        <div id="lista-chats" class="empty-msg">Sin chats recientes</div>
-    </div>
-
-    <div id="grupos-panel" class="panel">
-        <h3>Grupos</h3>
-        <div id="lista-grupos" class="empty-msg">Sin grupos recientes</div>
-    </div>
-
-    <div id="perfilModal" class="modal">
-        <div class="modal-content">
-            <h3>Mi Perfil</h3>
-            <label class="custom-file-upload">
-                <input type="file" id="inputFoto" accept="image/*" style="display:none" onchange="previewFile()">
-                Cambiar foto de perfil
-            </label>
-            <button class="btn" onclick="verFotoPerfil()">Ver foto de perfil</button>
-            <button class="btn" onclick="eliminarFoto()">Eliminar foto de perfil</button>
-            <button class="btn" onclick="document.getElementById('perfilModal').style.display='none'">Cerrar</button>
-        </div>
-    </div>
-
-    <div id="viewPhotoModal" class="modal">
-        <span onclick="document.getElementById('viewPhotoModal').style.display='none'" style="cursor:pointer; position:absolute; top:20px; right:20px; font-size:30px;">&times;</span>
-        <img id="imgVistaPrevia" src="" style="max-width: 80%; border-radius: 8px;">
-    </div>
-
-    <script>
-        function mostrarPanel(id) {
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-
-        // Lógica de Foto de Perfil
-        function previewFile() {
-            const file = document.getElementById('inputFoto').files[0];
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const dataUrl = reader.result;
-                document.getElementById('avatarPrincipal').src = dataUrl;
-                localStorage.setItem('userAvatar', dataUrl);
-            }
-            if (file) reader.readAsDataURL(file);
-        }
-
-        function verFotoPerfil() {
-            document.getElementById('imgVistaPrevia').src = document.getElementById('avatarPrincipal').src;
-            document.getElementById('perfilModal').style.display = 'none';
-            document.getElementById('viewPhotoModal').style.display = 'flex';
-        }
-
-        function eliminarFoto() {
-            localStorage.removeItem('userAvatar');
-            document.getElementById('avatarPrincipal').src = 'https://via.placeholder.com/150';
-            alert("Foto eliminada");
-        }
-
-        window.onload = () => {
-            const savedPhoto = localStorage.getItem('userAvatar');
-            if (savedPhoto) document.getElementById('avatarPrincipal').src = savedPhoto;
-        }
-    </script>
-    <script>
-    async function cargarChats() {
-        try {
-            const respuesta = await fetch('/api/chats');
-            const chats = await respuesta.json();
-            
-            const contenedor = document.getElementById('lista-chats');
-            if (chats && chats.length > 0) {
-                contenedor.innerHTML = ''; 
-                chats.forEach(chat => {
-                    contenedor.innerHTML += `<div class="item-list">${chat.nombre}</div>`;
-                });
-            }
-        } catch (e) {
-            console.error("Error conectando con el servidor:", e);
-        }
-    }
+<div class="sidebar">
     
-   
-    window.onload = cargarChats;
-</script>
-</body>
-</html>
+    <div class="sidebar-top">
+        <div class="profile-section">
+            <img src="tu-perfil.png" alt="Perfil" class="profile-img">
+        </div>
+        
+        <div class="navigation-buttons">
+            <button id="btnChats" class="nav-btn" title="Chats Individuales">
+                <i class="icon-chat"></i> 💬
+            </button>
+            <button id="btnGrupos" class="nav-btn" title="Grupos">
+                <i class="icon-group"></i> 👥
+            </button>
+        </div>
+    </div>
+
+    <div class="sidebar-bottom">
+        <div class="chat-list-section">
+            <h3>Mensajería</h3>
+            <div id="lista-chats-individuales">
+                <p class="no-chats">Sin chats recientes</p>
+            </div>
+            
+            <h3>Grupos</h3>
+            <div id="lista-chats-grupos">
+                <p class="no-chats">Sin grupos activos</p>
+            </div>
+        </div>
+    </div>
+
+    <button id="btnSalir" class="logout-btn">
+        <span>➡️ Salir</span>
+    </button>
+</div>>
