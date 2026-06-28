@@ -1,39 +1,14 @@
 const mongoose = require('mongoose');
 
-const messageSchema = new mongoose.Schema({
+const MessageSchema = new mongoose.Schema({
     sender: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', 
+        type: String, 
         required: true
     },
-    recipient: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', 
-        required: false
-    },
-    group: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Group', 
-        required: false
-    },
     text: {
-        type: String, 
-        trim: true
-    },
-    image: {
-        type: String, 
-        required: false
-    },
-    hiddenFor: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User' 
-    }],
-    isDeletedEveryone: {
-        type: Boolean,
-        default: false 
+        type: String,
+        required: true
     }
-}, {
-    timestamps: true 
-});
+}, { timestamps: true }); 
 
-module.exports = mongoose.model('Message', messageSchema);
+module.exports = mongoose.model('Message', MessageSchema);
