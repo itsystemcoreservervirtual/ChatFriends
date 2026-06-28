@@ -44,7 +44,7 @@
         function toggleMode() {
             isLogin = !isLogin;
             document.getElementById('authTitle').innerText = isLogin ? 'Iniciar Sesión' : 'Registro de Usuario';
-            document.getElementById('authBtn').innerText = isLogin ? 'Ingresar al Sistema' : 'Crear Cuenta Nueva';
+            document.getElementById('authBtn').innerText = isLogin ? 'Ingresar al Sistema' : 'Crear Cuenta';
             document.getElementById('toggleText').innerHTML = isLogin ? '¿No tienes cuenta? <span>Regístrate aquí</span>' : '¿Ya tienes cuenta? <span>Inicia sesión</span>';
         }
         function handleSubmit(event) {
