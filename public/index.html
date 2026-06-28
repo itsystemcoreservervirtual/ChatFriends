@@ -43,8 +43,8 @@
         let isLogin = true;
         function toggleMode() {
             isLogin = !isLogin;
-            document.getElementById('authTitle').innerText = isLogin ? 'Iniciar Sesión' : 'Regístrase aquí';
-            document.getElementById('authBtn').innerText = isLogin ? 'Ingresar al Sistema' : 'Crear Cuenta';
+            document.getElementById('authTitle').innerText = isLogin ? 'Bienvenido a ChatFull' : 'Regístrese aquí';
+            document.getElementById('authBtn').innerText = isLogin ? 'Iniciar Sesion' : 'Crear Cuenta';
             document.getElementById('toggleText').innerHTML = isLogin ? '¿No tienes cuenta? <span>Regístrate aquí</span>' : '¿Ya tienes cuenta? <span>Inicia sesión</span>';
         }
         function handleSubmit(event) {
