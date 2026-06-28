@@ -52,7 +52,7 @@ app.post('/api/login', async (req, res) => {
         
         const usuario = await User.findOne({ username: username.toLowerCase() });
 
-        // SI NO EXISTE EL REGISTRO: Bloqueamos el inicio de sesión de inmediato
+       
         if (!usuario) {
             return res.status(401).json({ mensaje: 'Acceso denegado. El usuario no se encuentra registrado.' });
         }
