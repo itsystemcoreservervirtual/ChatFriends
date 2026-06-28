@@ -4,23 +4,23 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true, // No permite que dos amigos usen el mismo nombre
+        unique: true, 
         trim: true
     },
     password: {
         type: String,
-        required: true // Se guardará encriptada en la base de datos
+        required: true 
     },
     avatar: {
-        type: String, // Aquí se guarda la ruta o link de la foto de perfil
-        default: 'https://via.placeholder.com/150' // Foto por defecto si no suben una
+        type: String,
+        default: 'https://via.placeholder.com/150' 
     },
     blockedUsers: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User' // Lista de IDs de usuarios que este usuario ha bloqueado
+        ref: 'User' 
     }]
 }, {
-    timestamps: true // Guarda automáticamente la fecha de creación de la cuenta
+    timestamps: true 
 });
 
 module.exports = mongoose.model('User', userSchema);
