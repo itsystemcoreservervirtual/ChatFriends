@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
-// REGISTRO DE USUARIOS
+//los usuarios se registraran aqui (quien vea este codigo ya estoy con sueño)
 exports.register = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -9,7 +9,7 @@ exports.register = async (req, res) => {
         let userExists = await User.findOne({ username });
         if (userExists) return res.status(400).json({ msg: 'El nombre de usuario ya está ocupado' });
 
-        // Encriptar la contraseña de forma segura
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -22,7 +22,7 @@ exports.register = async (req, res) => {
     }
 };
 
-// INICIAR SESIÓN
+
 exports.login = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -38,7 +38,7 @@ exports.login = async (req, res) => {
     }
 };
 
-// BORRAR CUENTA PERMANENTEMENTE
+
 exports.deleteAccount = async (req, res) => {
     try {
         const { userId } = req.body;
