@@ -1,0 +1,25 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// Pega aquí tu URL de MongoDB Atlas
+mongoose.connect('TU_URL_DE_MONGODB_AQUI');
+
+const Mensaje = mongoose.model('Mensaje', { texto: String });
+
+app.post('/guardar', async (req, res) => {
+    const m = new Mensaje({ texto: req.body.texto });
+    await m.save();
+    res.send('Guardado');
+});
+
+app.get('/obtener', async (req, res) => {
+    const lista = await Mensaje.find();
+    res.json(lista);
+});
+
+app.listen(3000, () => console.log('Servidor listo en puerto 3000'));
